@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  
+  todo:
+    image: sabdhagiri/todo:latest
+    ports:
+      - 6488
+    networks:
+      - proxy
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/todo
+        - com.df.port=6488
+
+networks:
+  proxy:
+    external: true
